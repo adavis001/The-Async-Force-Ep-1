@@ -78,10 +78,17 @@ function filmReq(){
 
     		//creat a list of planets in each Movie title
     	for(var j= 0; j< requestData.results[i].planets.length; j++){
-    		const filmPlanets = requestData.results[i].planets[j];
-    		let plantetList = document.createElement('li');
-    		plantetList.innerHTML = filmPlanets;
-    		newFilm.appendChild(plantetList);
+    		const planetReq = new XMLHttpRequest();
+    		planetReq.addEventListener('load', moviePlanets);
+    		planetReq.open('GET', requestData.results[i].planets[j]);
+    		planetReq.send();
+    		function moviePlanets(){
+    			const requestData = JSON.parse(this.responseText);
+    			const planetName = requestData.name;
+    			let newList = document.createElement('ul');
+    			newList.innerHTML = planetName;
+    			newFilm.appendChild(newList);
+    		}
     	}
 
 	}
