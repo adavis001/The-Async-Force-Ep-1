@@ -60,3 +60,29 @@ function reqWorld1() {
 	const personSpecies = document.querySelector('#person14Species');
 	personSpecies.innerHTML = 'I am proud to be a ' + species;
 }
+
+const fReq = new XMLHttpRequest();
+
+fReq.addEventListener('load', filmReq);
+fReq.open('GET', 'http://swapi.co/api/films/');
+fReq.send();
+
+function filmReq(){
+	const requestData = JSON.parse(this.responseText);
+	for(var i = 0; i < requestData.results.length; i++) {
+		//create a list of the Star Wars movie Titles
+    	const filmTitle = requestData.results[i].title;
+    	let newFilm = document.createElement('div');
+    	newFilm.innerHTML = filmTitle;
+    	filmList.appendChild(newFilm);
+
+    		//creat a list of planets in each Movie title
+    	for(var j= 0; j< requestData.results[i].planets.length; j++){
+    		const filmPlanets = requestData.results[i].planets[j];
+    		let plantetList = document.createElement('li');
+    		plantetList.innerHTML = filmPlanets;
+    		newFilm.appendChild(plantetList);
+    	}
+
+	}
+}
